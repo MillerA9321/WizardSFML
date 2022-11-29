@@ -1,0 +1,2 @@
+//In class last wednesday my original plan was to have like each entity do an action and draw itself in their own class
+//but the professor suggested that the actual drawing be done in a new class called Engine Class and I have been stuck on this
