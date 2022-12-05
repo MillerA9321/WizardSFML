@@ -15,24 +15,26 @@ class Entity
     Entity();
     bool hit();
     bool isAlive();
+    virtual bool spawnRate(Clock timeElapsed);
+    Vector2f getPosition();
+    void updatePosition();
+    Sprite getSprite();
 
     protected:
     
     float maxHealth;
     float maxSpeed;
-    float damage;
+    float damageDealt;
+    Vector2f position;
 };
 
-class Player: public Entity
+class GreenSlime: public Entity
 {
     public:
-    
-    Player();
-    void getPlayerPosition();
-
+    GreenSlime();
+    bool spawnRate(Clock timeElapsed) override;
 
     private:
-    
-    Vector2f playerPosition;
     float currentHealth;
 };
+
