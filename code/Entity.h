@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/**#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <fstream>
@@ -38,3 +38,4 @@ class GreenSlime: public Entity
     float currentHealth;
 };
 
+**/

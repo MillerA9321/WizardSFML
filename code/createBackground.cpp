@@ -1,4 +1,5 @@
 #include "wizardBattle.h"
+#include <SFML/Graphics.hpp>
 
 int createBackground(VertexArray& rVA, IntRect arena)
 {

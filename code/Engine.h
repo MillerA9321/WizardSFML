@@ -1,4 +1,4 @@
-#include <iostream>
+/**#include <iostream>
 #include <fstream>
 #include <vector>
 #include "Entity.h"
@@ -17,4 +17,4 @@ class Engine
     IntRect sizeTile;
 
 
-};
+};**/

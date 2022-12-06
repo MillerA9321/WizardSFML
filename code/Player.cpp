@@ -5,10 +5,10 @@ Player::Player()
 	playerCurrentHealth = PLAYERSTARTHEALTH;
 	playerMaxHealth = PLAYERSTARTHEALTH;
 
-	playerTexture.loadFromFile("sprites/wizard.png");
+	playerTexture.loadFromFile("sprites/player1.png");
 	playerSprite.setTexture(playerTexture);
 
-	playerSprite.setOrigin(16, 16);
+	playerSprite.setOrigin(25, 25);
 }
 
 void Player::playerSpawn(IntRect arena, Vector2f resolution, int tileSize)

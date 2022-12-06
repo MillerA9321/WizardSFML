@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+/**#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -16,3 +16,5 @@
 //The only comment on the UML he made was
 //"One issue, in general you don't need to talk about code specifics (classes, etc)
 //in your requirements, just stick to the functionality."
+
+**/
