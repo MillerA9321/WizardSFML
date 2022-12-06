@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Player.h"
 #include "wizardBattle.h"
+#include "TextureHolder.h"
 
 //Make code easier to type with "using namespace"
 using namespace sf;
@@ -10,6 +11,8 @@ using namespace std;
 
 int main()
 {
+	TextureHolder holder;
+
 	enum class State { PAUSED, LEVELING_UP, GAME_OVER, PLAYING };
 
 	State state = State::GAME_OVER;
@@ -18,9 +21,9 @@ int main()
 
 	resolution.x = VideoMode::getDesktopMode().width;
 	resolution.y = VideoMode::getDesktopMode().height;
-	RenderWindow window(VideoMode(resolution.x, resolution.y), "Wizard Battle", Style::Resize);
+	RenderWindow window(VideoMode(resolution.x, resolution.y), "Wizard Battle", Style::Default);
 
-	View mainView(sf::FloatRect(0, 0, resolution.x, resolution.y));
+	View mainView(FloatRect(0, 0, resolution.x, resolution.y));
 
 	Clock clock;
 
@@ -36,9 +39,7 @@ int main()
 
 	VertexArray background;
 
-	Texture textureBackground;
-
-	textureBackground.loadFromFile("sprites/background_sheet.png");
+	Texture  textureBackground = TextureHolder::getTexture("sprites/background_sheet.png");
 
 	while (window.isOpen())
 	{
