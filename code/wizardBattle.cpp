@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Player.h"
+#include "Projectile.h"
 #include "wizardBattle.h"
 #include "TextureHolder.h"
 
@@ -40,6 +41,16 @@ int main()
 	VertexArray background;
 
 	Texture  textureBackground = TextureHolder::getTexture("sprites/background_sheet.png");
+	
+	// "Mana" amount (honestly just the reserve from the bullets)
+	Projectile projectiles[100];
+	int currentProjectileCount = 0;
+	int spareProjectileCount = 16;
+	int projectileClip = 4;
+	int clipSize = 4;
+	float fireRate = 1;
+	// When was the spell last cast?
+	Time lastPressed;
 
 	while (window.isOpen())
 	{
@@ -71,7 +82,26 @@ int main()
 				// What to do while playing
 				if (state == State::PLAYING)
 				{
+					// Reloading
+					if (event.key.code == Keyboard::R)
+					{
+						if (spareProjectileCount >= clipSize)
+						{
+							// Plenty of bullets. Reload.
+							projectileClip = clipSize;
+							spareProjectileCount -= clipSize;
+						}
+						else if (spareProjectileCount > 0)
+						{
+							// Only few bullets left
+							projectileClip = spareProjectileCount;
+							spareProjectileCount = 0;
+						}
+						else
+						{
 
+						}
+					}
 				}
 			}
 		}
@@ -82,7 +112,7 @@ int main()
 			window.close();
 		}
 
-		// Handle Movement
+		// Handle Player Input
 		if (state == State::PLAYING)
 		{
 			if (Keyboard::isKeyPressed(Keyboard::W))
@@ -116,6 +146,26 @@ int main()
 			else
 			{
 				player.stopRight();
+			}
+			// Fire Projectile
+			if (Mouse::isButtonPressed(sf::Mouse::Left))
+			{
+				if (gameTimeTotal.asMilliseconds() - lastPressed.asMilliseconds() > 1000 / fireRate && projectileClip > 0)
+				{
+					// Pass the centre of the player 
+					// and the centre of the cross-hair
+					// to the shoot function
+					projectiles[currentProjectileCount].shoot(
+						player.getPlayerCenter().x, player.getPlayerCenter().y,
+						mouseWorldPosition.x, mouseWorldPosition.y);
+					currentProjectileCount++;
+					if (currentProjectileCount > 99)
+					{
+						currentProjectileCount = 0;
+					}
+					lastPressed = gameTimeTotal;
+					projectileClip--;
+				}
 			}
 		}
 		// Handle Leveling up
@@ -185,6 +235,15 @@ int main()
 
 			// Make the view center around the player                
 			mainView.setCenter(player.getPlayerCenter());
+
+			// Update projectiles
+			for (int i = 0; i < 100; i++)
+			{
+				if (projectiles[i].isInFlight())
+				{
+					projectiles[i].update(dtAsSeconds);
+				}
+			}
 		}
 		// Draw the scene
 		if (state == State::PLAYING)
@@ -194,6 +253,14 @@ int main()
 			window.setView(mainView);
 			// Draw the background
 			window.draw(background, &textureBackground);
+			// Draw projectiles
+			for (int i = 0; i < 100; i++)
+			{
+				if (projectiles[i].isInFlight())
+				{
+					window.draw(projectiles[i].getShape());
+				}
+			}
 			// Draw the player
 			window.draw(player.getPlayerSprite());
 
