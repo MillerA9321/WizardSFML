@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "Player.h"
+#include <SFML/Graphics.hpp>
 
 Entity::Entity()
 {
@@ -8,6 +9,7 @@ Entity::Entity()
     maxSpeed = 5;
     position.x = 0;
     position.y = 0;
+    slimeSprite = Sprite(TextureHolder::getTexture("sprite/kingSlime.png"));
 };
 
 void Entity::hit()
@@ -21,17 +23,29 @@ bool Entity::isAlive()
     {
         return false;
     }
+    else
+    {
+        return true;
+    } 
 }
 
-Vector2f Entity::getPosition()
+Sprite Entity::getSprite()
 {
-    return position;
+    return slimeSprite;
 }
 
-void Entity::updatePosition()
+
+FloatRect Entity::getPosition()
+{
+    return slimeSprite.getGlobalBounds();
+}
+
+void Entity::updatePosition(float elapsedTime)
 {
     Player player;
-    position.x = player.getPlayerCoordinates().x;
-    position.y = player.getPlayerCoordinates().y;
-
+    position.x = player.getPlayerCoordinates().x + maxSpeed * elapsedTime;
+    position.y = player.getPlayerCoordinates().y + maxSpeed * elapsedTime;
 }
+
+
+

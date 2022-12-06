@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "TextureHolder.h"
 #pragma once
 
 using namespace sf;
@@ -15,12 +16,13 @@ class Entity
     Entity();
     void hit();
     bool isAlive();
-    virtual bool spawnRate(Clock timeElapsed);
-    Vector2f getPosition();
-    void updatePosition();
+    bool spawnRate(float timeElapsed);
+    FloatRect getPosition();
+    void updatePosition(float elapsedTime);
     Sprite getSprite();
 
     protected:
+    Sprite slimeSprite;
     float currentHealth;
     float maxHealth;
     float maxSpeed;
@@ -28,11 +30,12 @@ class Entity
     Vector2f position;
 };
 
-class GreenSlime: public Entity
+class KingSlime: public Entity
 {
     public:
-    GreenSlime();
-    bool spawnRate(Clock timeElapsed) override;
+    KingSlime();
+    bool spawnRate(float timeElapsed);
+    Sprite getSprite();
 
     private:
     float currentHealth;
