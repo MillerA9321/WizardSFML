@@ -1,4 +1,4 @@
-/**#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <fstream>
@@ -13,7 +13,7 @@ class Entity
     public:
 
     Entity();
-    bool hit();
+    void hit();
     bool isAlive();
     virtual bool spawnRate(Clock timeElapsed);
     Vector2f getPosition();
@@ -21,7 +21,7 @@ class Entity
     Sprite getSprite();
 
     protected:
-    
+    float currentHealth;
     float maxHealth;
     float maxSpeed;
     float damageDealt;
@@ -38,4 +38,3 @@ class GreenSlime: public Entity
     float currentHealth;
 };
 
-**/

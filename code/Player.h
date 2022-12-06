@@ -9,6 +9,7 @@ public:
 	Player();
 	void playerSpawn(IntRect arena, Vector2f resolution, int tileSize);
 	void resetPlayerStats();
+	Vector2f getPlayerCoordinates();
 
 	bool hit(Time timeHit);
 

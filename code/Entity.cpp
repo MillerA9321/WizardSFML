@@ -1,4 +1,5 @@
-/**#include "Entity.h"
+#include "Entity.h"
+#include "Player.h"
 
 Entity::Entity()
 {
@@ -9,7 +10,28 @@ Entity::Entity()
     position.y = 0;
 };
 
-bool Entity::hit()
+void Entity::hit()
 {
-    
-}**/
+    currentHealth -= 50;
+}
+
+bool Entity::isAlive()
+{
+    if (currentHealth > 0)
+    {
+        return false;
+    }
+}
+
+Vector2f Entity::getPosition()
+{
+    return position;
+}
+
+void Entity::updatePosition()
+{
+    Player player;
+    position.x = player.getPlayerCoordinates().x;
+    position.y = player.getPlayerCoordinates().y;
+
+}
