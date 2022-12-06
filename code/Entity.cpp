@@ -7,10 +7,10 @@ Entity::Entity()
     maxHealth = 100;
     damageDealt = 10;
     maxSpeed = 5;
-    position.x = 0;
-    position.y = 0;
-    slimeSprite = Sprite(TextureHolder::getTexture("sprite/greenSlime.png"));
-};
+    slimePosition.x = 0;
+    slimePosition.y = 0;
+    slimeSprite = Sprite(TextureHolder::getTexture("sprites/greenSlime.png"));
+}
 
 void Entity::hit()
 {
@@ -43,8 +43,29 @@ FloatRect Entity::getPosition()
 void Entity::updatePosition(float elapsedTime)
 {
     Player player;
-    position.x = player.getPlayerCoordinates().x + maxSpeed * elapsedTime;
-    position.y = player.getPlayerCoordinates().y + maxSpeed * elapsedTime;
+    float playerCoord_X, playerCoord_Y;
+    playerCoord_X = player.getPlayerCoordinates().x;
+    playerCoord_Y = player.getPlayerCoordinates().y;
+
+    if (playerCoord_X > slimePosition.x)
+    {
+        slimePosition.x = player.getPlayerCoordinates().x + maxSpeed * elapsedTime;
+    }
+    
+    if (playerCoord_Y > slimePosition.y)
+    {
+        slimePosition.y = player.getPlayerCoordinates().y + maxSpeed * elapsedTime;
+    }
+    
+    if (playerCoord_X < slimePosition.x)
+    {
+        slimePosition.x = player.getPlayerCoordinates().x - maxSpeed * elapsedTime;
+    }
+
+    if(playerCoord_Y < slimePosition.y)
+    {
+        slimePosition.y = player.getPlayerCoordinates().y - maxSpeed * elapsedTime;
+    }
 }
 
 

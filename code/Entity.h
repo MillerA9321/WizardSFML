@@ -27,7 +27,7 @@ class Entity
     float maxHealth;
     float maxSpeed;
     float damageDealt;
-    Vector2f position;
+    Vector2f slimePosition;
 };
 
 class KingSlime: public Entity
@@ -38,6 +38,39 @@ class KingSlime: public Entity
     Sprite getSprite();
 
     private:
-    float currentHealth;
+    
 };
+
+class GreenSlime: public Entity
+{
+    public:
+    GreenSlime();
+    bool spawnRate(float timeElapsed);
+    Sprite getSprite();
+
+    private:
+    
+};
+
+class RedSlime: public Entity
+{
+    public:
+    RedSlime();
+    bool spawnRate(float timeElapsed);
+    Sprite getSprite();
+
+    private:
+    
+};
+
+class YellowSlime: public Entity
+{
+    public:
+    YellowSlime();
+    bool spawnRate(float timeElapsed);
+    Sprite getSprite();
+
+    private:
+};
+
 

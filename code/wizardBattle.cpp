@@ -53,10 +53,6 @@ int main()
 	// When was the spell last cast?
 	Time lastPressed;
 
-	vector<Entity> totalSlimes;
-	KingSlime kingSlimes;
-
-
 	while (window.isOpen())
 	{
 		/*
@@ -271,10 +267,6 @@ int main()
 		}
 		if (state == State::PLAYING)
 		{
-			if(kingSlimes.spawnRate(gameTimeTotal.asSeconds()))
-			{
-				//Might not use this
-			}
 		}
 		if (state == State::PAUSED)
 		{
