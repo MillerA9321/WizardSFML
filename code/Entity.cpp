@@ -9,7 +9,7 @@ Entity::Entity()
     maxSpeed = 5;
     position.x = 0;
     position.y = 0;
-    slimeSprite = Sprite(TextureHolder::getTexture("sprite/kingSlime.png"));
+    slimeSprite = Sprite(TextureHolder::getTexture("sprite/greenSlime.png"));
 };
 
 void Entity::hit()

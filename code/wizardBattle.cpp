@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "wizardBattle.h"
 #include "TextureHolder.h"
+#include "Entity.h"
 
 //Make code easier to type with "using namespace"
 using namespace sf;
@@ -51,6 +52,10 @@ int main()
 	float fireRate = 1;
 	// When was the spell last cast?
 	Time lastPressed;
+
+	vector<Entity> totalSlimes;
+	KingSlime kingSlimes;
+
 
 	while (window.isOpen())
 	{
@@ -263,12 +268,13 @@ int main()
 			}
 			// Draw the player
 			window.draw(player.getPlayerSprite());
-
-		
 		}
-		if (state == State::LEVELING_UP)
+		if (state == State::PLAYING)
 		{
-			
+			if(kingSlimes.spawnRate(gameTimeTotal.asSeconds()))
+			{
+				//Might not use this
+			}
 		}
 		if (state == State::PAUSED)
 		{
