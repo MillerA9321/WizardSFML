@@ -5,6 +5,7 @@
 #include "Projectile.h"
 #include "Entity.h"
 #include <vector>
+#include <sstream>
 
 //Make code easier to type with "using namespace"
 using namespace sf;
@@ -13,6 +14,9 @@ using namespace std;
 int main()
 {
 	TextureHolder holder;
+
+	Text text;
+	Font font;
 
 	// Create Enum Class for 4 stages
 	enum class State { PAUSED, LEVELING_UP, GAME_OVER, PLAYING };
@@ -51,8 +55,8 @@ int main()
 	Projectile projectiles[100];
 	int currentProjectileCount = 0;
 	int spareProjectileCount = 16;
-	int projectileClip = 16;
-	int clipSize = 16;
+	int projectileClip = 50;
+	int clipSize = 50;
 	float fireRate = 1;
 
 	//Spell last cast
@@ -223,8 +227,8 @@ int main()
 			if (state == State::PLAYING)
 			{
 				// Prepare the level
-				arena.width = 1500;
-				arena.height = 1500;
+				arena.width = 1000;
+				arena.height = 1000;
 				arena.left = 0;
 				arena.top = 0;
 
@@ -311,7 +315,19 @@ int main()
 
 		if (state == State::PLAYING)
 		{
-
+			for (int i = 0; i < 50; i++)
+			{
+				for (int j = 0; j < 50; j++)
+				{
+					if(projectiles->isInFlight() && slimes[j].isAlive())
+					{
+						if(projectiles[i].getPosition().intersects(slimes[j].getPosition()))
+						{
+							projectiles[i].stop();
+						}
+					}
+				}
+			}
 		}
 
 		if (state == State::LEVELING_UP)
@@ -324,8 +340,25 @@ int main()
 
 		if (state == State::GAME_OVER)
 		{
-		}
+			font.loadFromFile("font/IMMORTAL.ttf");
+			if(!font.loadFromFile("font/IMMORTAL.ttf"))
+			{
+				cout << "Font file not found" << endl;
+			}
+			
+			text.setFont(font);
+			text.setFillColor(Color::Blue);
+			text.setCharacterSize(64);
+			text.setPosition(400, 400);
 
+			stringstream display;
+
+			display << "			Wizards" << endl << "	Press Enter + 1 To Play" << endl;
+			text.setString(display.str());
+
+			window.draw(text);
+		}
+		
 		window.display();
 
 	}

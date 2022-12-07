@@ -104,7 +104,7 @@ YellowSlime::YellowSlime()
     maxHealth = 100;
     currentHealth = maxHealth;
     damageDealt = 20;
-    maxSpeed = 50;
+    maxSpeed = 500;
     slimePosition.x = 0;
     slimePosition.y = 0;
     slimeSprite = Sprite(TextureHolder::getTexture("sprites/yellowSlime.png"));

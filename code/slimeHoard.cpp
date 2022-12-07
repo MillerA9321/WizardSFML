@@ -6,7 +6,7 @@ using namespace sf;
 
 Entity* slimeHoard(float timeElapsed, IntRect arena)
 {
-    Entity* slimes = new Entity[200];
+    Entity* slimes = new Entity[50];
 
     KingSlime kingSlime;
     GreenSlime greenSlime;

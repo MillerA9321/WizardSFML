@@ -50,22 +50,22 @@ void Entity::updatePosition(float elapsedTime)
 
     if (playerCoord_X > slimePosition.x)
     {
-        slimePosition.x = player.getPlayerCoordinates().x + maxSpeed * elapsedTime;
+        slimePosition.x = slimePosition.x + maxSpeed * elapsedTime;
     }
     
     if (playerCoord_Y > slimePosition.y)
     {
-        slimePosition.y = player.getPlayerCoordinates().y + maxSpeed * elapsedTime;
+        slimePosition.y = slimePosition.y + maxSpeed * elapsedTime;
     }
     
     if (playerCoord_X < slimePosition.x)
     {
-        slimePosition.x = player.getPlayerCoordinates().x - maxSpeed * elapsedTime;
+        slimePosition.x = slimePosition.y - maxSpeed * elapsedTime;
     }
 
     if(playerCoord_Y < slimePosition.y)
     {
-        slimePosition.y = player.getPlayerCoordinates().y - maxSpeed * elapsedTime;
+        slimePosition.y = slimePosition.y - maxSpeed * elapsedTime;
     }
 
     slimeSprite.setPosition(slimePosition);
