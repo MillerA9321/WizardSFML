@@ -7,7 +7,7 @@ Entity::Entity()
 {
     maxHealth = 100;
     damageDealt = 10;
-    maxSpeed = 5;
+    maxSpeed = 20;
     slimePosition.x = 0;
     slimePosition.y = 0;
     slimeSprite = Sprite(TextureHolder::getTexture("sprites/greenSlime.png"));
@@ -41,38 +41,46 @@ FloatRect Entity::getPosition()
     return slimeSprite.getGlobalBounds();
 }
 
-void Entity::updatePosition(float elapsedTime)
+void Entity::updatePosition(float elapsedTime,
+	Vector2f playerLocation)
 {
-    Player player;
-    float playerCoord_X, playerCoord_Y;
-    playerCoord_X = player.getPlayerCoordinates().x;
-    playerCoord_Y = player.getPlayerCoordinates().y;
+	float playerX = playerLocation.x;
+	float playerY = playerLocation.y;
 
-    if (playerCoord_X > slimePosition.x)
-    {
-        slimePosition.x = slimePosition.x + maxSpeed * elapsedTime;
-    }
-    
-    if (playerCoord_Y > slimePosition.y)
-    {
-        slimePosition.y = slimePosition.y + maxSpeed * elapsedTime;
-    }
-    
-    if (playerCoord_X < slimePosition.x)
-    {
-        slimePosition.x = slimePosition.y - maxSpeed * elapsedTime;
-    }
+	// Update the zombie position variables
+	if (playerX > slimePosition.x)
+	{
+		slimePosition.x = slimePosition.x +
+			maxSpeed * elapsedTime;
+	}
 
-    if(playerCoord_Y < slimePosition.y)
-    {
-        slimePosition.y = slimePosition.y - maxSpeed * elapsedTime;
-    }
+	if (playerY > slimePosition.y)
+	{
+		slimePosition.y = slimePosition.y +
+			maxSpeed * elapsedTime;
+	}
 
-    slimeSprite.setPosition(slimePosition);
+	if (playerX < slimePosition.x)
+	{
+		slimePosition.x = slimePosition.x -
+			maxSpeed * elapsedTime;
+	}
 
-    float angle = (atan2(playerCoord_Y - slimePosition.y, playerCoord_X - slimePosition.x) * 180) / 3.141;
-    slimeSprite.setRotation(angle);
+	if (playerY < slimePosition.y)
+	{
+		slimePosition.y = slimePosition.y -
+			maxSpeed * elapsedTime;
+	}
+
+	// Move the sprite
+	slimeSprite.setPosition(slimePosition);
+
+	// Face the sprite in the correct directionvvvvvvvvv
+	
+
 }
+
+
 
 void Entity::slimeSpawn(float x, float y, string slimeType)
 {

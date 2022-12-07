@@ -18,7 +18,7 @@ class Entity
     bool isAlive();
     bool spawnRate(float timeElapsed);
     FloatRect getPosition();
-    void updatePosition(float elapsedTime);
+    void updatePosition(float elapsedTime, Vector2f playerPosition);
     Sprite getSprite();
     void slimeSpawn(float x, float y, string slimeType);
 

@@ -280,7 +280,7 @@ int main()
 			{
 				if (slimes[i].isAlive())
 				{
-					slimes[i].updatePosition(dtAsSeconds);
+					slimes[i].updatePosition(dtAsSeconds, playerPosition);
 				}
 			}
 			// Update projectiles
