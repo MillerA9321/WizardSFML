@@ -173,6 +173,11 @@ void Player::updatePlayer(float elapsedTime, Vector2i mousePosition)
 	playerSprite.setRotation(angle);
 }
 
+Vector2f Player::getPlayerCoordinates()
+{
+	return playerPosition;
+}
+
 /**
 void Player::upgradeSpeed()
 {

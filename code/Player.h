@@ -50,6 +50,7 @@ public:
 	Vector2f getPlayerCenter();
 	float getRotation();
 	Sprite getPlayerSprite();
+	Vector2f getPlayerCoordinates();
 
 	int currentHealth();
 

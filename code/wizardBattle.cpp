@@ -3,6 +3,8 @@
 #include "Player.h"
 #include "TextureHolder.h"
 #include "Projectile.h"
+#include "Entity.h"
+#include <vector>
 
 //Make code easier to type with "using namespace"
 using namespace sf;
@@ -56,6 +58,10 @@ int main()
 	//Spell last cast
 	Time lastPressed;
 
+	//Create Slime Vector
+	vector<Entity>* slimeHoard = nullptr;
+	GreenSlime* greenSlimes;
+
 	// The main game loop
 	while (window.isOpen())
 	{
@@ -85,7 +91,7 @@ int main()
 					state = State::LEVELING_UP;
 				}
 
-				//What to do while playing
+				//What to do while playingS
 				if (state == State::PLAYING)
 				{
 					if (event.key.code == Keyboard::R)
@@ -286,6 +292,10 @@ int main()
 			}
 			// Draw the player
 			window.draw(player.getPlayerSprite());
+		}
+
+		if (state == State::PLAYING)
+		{
 		}
 
 		if (state == State::LEVELING_UP)
