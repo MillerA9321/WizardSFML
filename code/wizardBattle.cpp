@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include <vector>
 #include <sstream>
+#include <iomanip>
 
 //Make code easier to type with "using namespace"
 using namespace sf;
@@ -17,6 +18,12 @@ int main()
 
 	Text text;
 	Font font;
+
+	font.loadFromFile("font/IMMORTAL.ttf");
+	if(!font.loadFromFile("font/IMMORTAL.ttf"))
+	{
+		cout << "Font file not found" << endl;
+	}
 
 	// Create Enum Class for 4 stages
 	enum class State { PAUSED, LEVELING_UP, GAME_OVER, PLAYING };
@@ -331,22 +338,25 @@ int main()
 			}
 
 		}
-		if (state == State::LEVELING_UP)
+
+		if (state == State::PLAYING)
 		{
+			text.setFont(font);
+			text.setFillColor(Color::Black);
+			text.setCharacterSize(32);
+			text.setPosition(75, 950);
+
+			stringstream display;
+
+			display << "Time Survived: " << fixed << setprecision(2) << gameTimeTotal.asSeconds() << endl;
+			text.setString(display.str());
+
+			window.draw(text);
 		}
 
-		if (state == State::PAUSED)
-		{
-		}
-
+		//Title Screen
 		if (state == State::GAME_OVER)
 		{
-			font.loadFromFile("font/IMMORTAL.ttf");
-			if(!font.loadFromFile("font/IMMORTAL.ttf"))
-			{
-				cout << "Font file not found" << endl;
-			}
-			
 			text.setFont(font);
 			text.setFillColor(Color::Blue);
 			text.setCharacterSize(64);
