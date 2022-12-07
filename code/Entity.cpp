@@ -11,6 +11,8 @@ Entity::Entity()
     slimePosition.x = 0;
     slimePosition.y = 0;
     slimeSprite = Sprite(TextureHolder::getTexture("sprites/greenSlime.png"));
+    slimeSprite.setScale(1, 1);
+    slimeSprite.setOrigin(16, 16);
 }
 
 void Entity::hit()

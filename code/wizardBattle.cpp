@@ -26,7 +26,7 @@ int main()
 	}
 
 	// Create Enum Class for 4 stages
-	enum class State { PAUSED, LEVELING_UP, GAME_OVER, PLAYING };
+	enum class State { PAUSED, DEAD, GAME_OVER, PLAYING, LEVELING_UP};
 	
 	// Set class to GAME_OVER
 	State state = State::GAME_OVER;
@@ -95,7 +95,6 @@ int main()
 					clock.restart();
 				}
 
-				// Start a new game if game over
 				else if (event.key.code == Keyboard::Return && state == State::GAME_OVER)
 				{
 					state = State::LEVELING_UP;
@@ -127,6 +126,7 @@ int main()
 			}
 		}
 	}
+
 
 
 		 // Handle the player quitting
@@ -233,24 +233,17 @@ int main()
 
 			if (state == State::PLAYING)
 			{
-				// Prepare the level
-				arena.width = 1000;
-				arena.height = 1000;
-				arena.left = 0;
-				arena.top = 0;
+			arena.width = 2000;
+			arena.height = 2000;
+			arena.left = 0;
+			arena.top = 0;
 
-				int tileSize = createBackground(background, arena);
-				
-				// Spawn the player in the middle of the arena
-				player.spawnPlayer(arena, resolution, tileSize);
-
-				//Begin spawning in Slimes
-				slimes = slimeHoard(gameTimeTotal.asSeconds(), arena);
-				// Reset the clock so there isn't a frame jump
-				clock.restart();
+			int tileSize = createBackground(background, arena);
+			player.spawnPlayer(arena, resolution, tileSize);
+			slimes = slimeHoard(gameTimeTotal.asSeconds(), arena);
+			clock.restart();
 			}
 		}
-
 		//Update the Scene
 		if (state == State::PLAYING)
 		{
@@ -325,15 +318,9 @@ int main()
 		{
 			for (int i = 0; i < 50; i++)
 			{
-				for (int j = 0; j < 50; j++)
+				if (player.getPlayerPosition().intersects(slimes[i].getPosition()))
 				{
-					if (projectiles->isInFlight() && slimes[j].isAlive())
-					{
-						if (projectiles[i].getPosition().intersects(slimes[j].getPosition()))
-						{
-							projectiles[i].stop();
-						}
-					}
+					state = State::DEAD;
 				}
 			}
 
@@ -344,7 +331,7 @@ int main()
 			text.setFont(font);
 			text.setFillColor(Color::Black);
 			text.setCharacterSize(32);
-			text.setPosition(75, 950);
+			text.setPosition(player.getPlayerCoordinates().x - 140, player.getPlayerCoordinates().y - 120);
 
 			stringstream display;
 
@@ -365,6 +352,22 @@ int main()
 			stringstream display;
 
 			display << "			Wizards" << endl << "	Press Enter + 1 To Play" << endl;
+			text.setString(display.str());
+
+			window.draw(text);
+		}
+
+		if(state == State::DEAD)
+		{
+			text.setFont(font);
+			text.setFillColor(Color::Red);
+			text.setCharacterSize(64);
+
+			text.setPosition(player.getPlayerCoordinates().x - 300 , player.getPlayerCoordinates().y - 300 );
+
+			stringstream display;
+
+			display << "	You Died!!!!" << endl << "Better Luck Next Time" << endl;
 			text.setString(display.str());
 
 			window.draw(text);
