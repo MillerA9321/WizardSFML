@@ -8,7 +8,8 @@ Player::Player()
 
 	playerTexture.loadFromFile("sprites/wizard.png");
 	playerSprite.setTexture(playerTexture);
-	playerSprite.setOrigin(25, 25);
+	playerSprite.setScale(0.5, 0.5);
+	playerSprite.setOrigin(128, 128);
 }
 
 void Player::spawnPlayer(IntRect arena, Vector2f resolution, int tileSize)

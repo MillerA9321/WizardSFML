@@ -43,7 +43,7 @@ int main()
 	IntRect arena;
 
 	VertexArray background;
-	Texture textureBackground = TextureHolder::getTexture("sprites/background_sheet.png");
+	Texture textureBackground = TextureHolder::getTexture("sprites/newBackground.png");
 
 	// "Mana amount" 
 	Projectile projectiles[100];
