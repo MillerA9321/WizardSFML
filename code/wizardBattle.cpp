@@ -218,8 +218,8 @@ int main()
 			if (state == State::PLAYING)
 			{
 				// Prepare the level
-				arena.width = 500;
-				arena.height = 500;
+				arena.width = 1500;
+				arena.height = 1500;
 				arena.left = 0;
 				arena.top = 0;
 

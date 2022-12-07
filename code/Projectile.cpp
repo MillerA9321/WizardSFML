@@ -3,7 +3,8 @@
 
 Projectile::Projectile()
 {
-    m_ProjectileShape.setSize(sf::Vector2f(2, 2));
+    m_ProjectileShape.setSize(sf::Vector2f(16, 16));
+    m_ProjectileShape.setFillColor(Color::Red);
 }
 
 void Projectile::shoot(float startX, float startY, float targetX, float targetY)
