@@ -7,7 +7,7 @@ using namespace sf;
 class Player
 {
 private:
-	const float START_SPEED = 100;
+	const float START_SPEED = 150;
 	const float START_HEALTH = 1000;
 
 	// Player Position

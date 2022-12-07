@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include <SFML/Graphics.hpp>
+#include <cmath>
 
 Entity::Entity()
 {
@@ -66,6 +67,51 @@ void Entity::updatePosition(float elapsedTime)
     {
         slimePosition.y = player.getPlayerCoordinates().y - maxSpeed * elapsedTime;
     }
+
+    slimeSprite.setPosition(slimePosition);
+
+    float angle = (atan2(playerCoord_Y - slimePosition.y, playerCoord_X - slimePosition.x) * 180) / 3.141;
+    slimeSprite.setRotation(angle);
 }
+
+void Entity::slimeSpawn(float x, float y, string slimeType)
+{
+    if(slimeType == "King")
+    {
+        KingSlime slimeKing;
+        slimeSprite = slimeKing.getSprite();
+        slimePosition.x = x;
+        slimePosition.y = y;
+        slimeSprite.setPosition(slimePosition);
+    }
+
+    if(slimeType == "Red")
+    {
+        RedSlime redSlime;
+        slimeSprite = redSlime.getSprite();
+        slimePosition.x = x;
+        slimePosition.y = y;
+        slimeSprite.setPosition(slimePosition);
+    }
+
+    if(slimeType == "Yellow")
+    {
+        YellowSlime yellowSlime;
+        slimeSprite = yellowSlime.getSprite();
+        slimePosition.x = x;
+        slimePosition.y = y;
+        slimeSprite.setPosition(slimePosition);
+    }
+
+    if (slimeType == "Green")
+    {
+        GreenSlime greenSlime;
+        slimeSprite = greenSlime.getSprite();
+        slimePosition.x = x;
+        slimePosition.y = y;
+        slimeSprite.setPosition(slimePosition);
+    }
+}
+
 
 

@@ -51,16 +51,15 @@ int main()
 	Projectile projectiles[100];
 	int currentProjectileCount = 0;
 	int spareProjectileCount = 16;
-	int projectileClip = 4;
-	int clipSize = 4;
+	int projectileClip = 16;
+	int clipSize = 16;
 	float fireRate = 1;
 
 	//Spell last cast
 	Time lastPressed;
 
-	//Create Slime Vector
-	vector<Entity>* slimeHoard = nullptr;
-	GreenSlime* greenSlimes;
+	//Create Slime Pointer
+	Entity* slimes = nullptr;
 
 	// The main game loop
 	while (window.isOpen())
@@ -234,6 +233,8 @@ int main()
 				// Spawn the player in the middle of the arena
 				player.spawnPlayer(arena, resolution, tileSize);
 
+				//Begin spawning in Slimes
+				slimes = slimeHoard(gameTimeTotal.asSeconds(), arena);
 				// Reset the clock so there isn't a frame jump
 				clock.restart();
 			}
@@ -263,6 +264,14 @@ int main()
 			// Make the view center around the player                
 			mainView.setCenter(player.getPlayerCenter());
 
+			//Loops through each sliime
+			for (int i = 0; i < 50; i++)
+			{
+				if (slimes[i].isAlive())
+				{
+					slimes[i].updatePosition(dtAsSeconds);
+				}
+			}
 			// Update projectiles
 			for (int i = 0; i < 100; i++)
 			{
@@ -292,10 +301,17 @@ int main()
 			}
 			// Draw the player
 			window.draw(player.getPlayerSprite());
+
+			//Draw the slimes
+			for (int i = 0; i < 50; i++)
+			{
+				window.draw(slimes[i].getSprite());
+			}
 		}
 
 		if (state == State::PLAYING)
 		{
+
 		}
 
 		if (state == State::LEVELING_UP)

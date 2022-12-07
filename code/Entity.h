@@ -20,6 +20,7 @@ class Entity
     FloatRect getPosition();
     void updatePosition(float elapsedTime);
     Sprite getSprite();
+    void slimeSpawn(float x, float y, string slimeType);
 
     protected:
     Sprite slimeSprite;
@@ -28,6 +29,7 @@ class Entity
     float maxSpeed;
     float damageDealt;
     Vector2f slimePosition;
+    bool slimeStatus;
 };
 
 class KingSlime: public Entity
