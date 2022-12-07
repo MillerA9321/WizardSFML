@@ -13,10 +13,10 @@ Entity* slimeHoard(float timeElapsed, IntRect arena)
     RedSlime redSlime;
     YellowSlime yellowSlime;
 
-    int maxY = arena.height -20;
-    int minY = arena.top + 20;
-    int maxX = arena.width - 20;
-    int minX = arena.left + 20;
+    int maxY = arena.height - 5;
+    int minY = arena.top + 5;
+    int maxX = arena.width - 5;
+    int minX = arena.left + 5;
 
     string slimeType;
 
