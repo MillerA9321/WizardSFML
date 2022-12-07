@@ -1,39 +1,35 @@
 #include "Player.h"
+
 Player::Player()
 {
-	playerSpeedPps = PLAYERSTARTSPEED;
-	playerCurrentHealth = PLAYERSTARTHEALTH;
-	playerMaxHealth = PLAYERSTARTHEALTH;
+	playerSpeedPps = START_SPEED;
+	playerMaxHealth = START_HEALTH;
+	playerCurrentHealth = START_HEALTH;
 
-	playerTexture.loadFromFile("sprites/player1.png");
+	playerTexture.loadFromFile("sprites/wizard.png");
 	playerSprite.setTexture(playerTexture);
-
 	playerSprite.setOrigin(25, 25);
 }
 
-void Player::playerSpawn(IntRect arena, Vector2f resolution, int tileSize)
+void Player::spawnPlayer(IntRect arena, Vector2f resolution, int tileSize)
 {
-	// Spawn in the middle of the map
+	// Place the player in the middle of the arena
 	playerPosition.x = arena.width / 2;
-	playerPosition.y = arena.width / 2;
+	playerPosition.y = arena.height / 2;
 
-	// Copy arena to the players arena
+	// Copy the details of the arena to the player's m_Arena
 	arenaSize.left = arena.left;
 	arenaSize.width = arena.width;
 	arenaSize.top = arena.top;
 	arenaSize.height = arena.height;
 
+	// Remember how big the tiles are in this arena
 	arenaTileSize = tileSize;
 
+	// Strore the resolution for future use
 	screenResolution.x = resolution.x;
 	screenResolution.y = resolution.y;
-}
 
-void Player::resetPlayerStats()
-{
-	playerSpeedPps = PLAYERSTARTSPEED;
-	playerCurrentHealth = PLAYERSTARTHEALTH;
-	playerMaxHealth = PLAYERSTARTHEALTH;
 }
 
 Time Player::getLastHitTime()
@@ -43,22 +39,16 @@ Time Player::getLastHitTime()
 
 bool Player::hit(Time timeHit)
 {
-	if (timeHit.asMilliseconds() > 200)
+	if (timeHit.asMilliseconds() - playerLastHit.asMilliseconds() > 200)// 2 tenths of second
 	{
 		playerLastHit = timeHit;
-		playerCurrentHealth -= 10;
-		
+		playerCurrentHealth-= 10;
 		return true;
 	}
 	else
 	{
 		return false;
 	}
-}
-
-Vector2f Player::getPlayerCoordinates()
-{
-	return playerPosition;
 }
 
 FloatRect Player::getPlayerPosition()
@@ -71,7 +61,7 @@ Vector2f Player::getPlayerCenter()
 	return playerPosition;
 }
 
-float Player::getPlayerRotation()
+float Player::getRotation()
 {
 	return playerSprite.getRotation();
 }
@@ -81,19 +71,9 @@ Sprite Player::getPlayerSprite()
 	return playerSprite;
 }
 
-int Player::getHealth()
+int Player::currentHealth()
 {
 	return playerCurrentHealth;
-}
-
-void Player::moveUp()
-{
-	keyUpPressed = true;
-}
-
-void Player::moveDown()
-{
-	keyDownPressed = true;
 }
 
 void Player::moveLeft()
@@ -106,14 +86,14 @@ void Player::moveRight()
 	keyRightPressed = true;
 }
 
-void Player::stopUp()
+void Player::moveUp()
 {
-	keyUpPressed = false;
+	keyUpPressed = true;
 }
 
-void Player::stopDown()
+void Player::moveDown()
 {
-	keyDownPressed = false;
+	keyDownPressed = true;
 }
 
 void Player::stopLeft()
@@ -126,8 +106,19 @@ void Player::stopRight()
 	keyRightPressed = false;
 }
 
+void Player::stopUp()
+{
+	keyUpPressed = false;
+}
+
+void Player::stopDown()
+{
+	keyDownPressed = false;
+}
+
 void Player::updatePlayer(float elapsedTime, Vector2i mousePosition)
 {
+
 	if (keyUpPressed)
 	{
 		playerPosition.y -= playerSpeedPps * elapsedTime;
@@ -138,56 +129,72 @@ void Player::updatePlayer(float elapsedTime, Vector2i mousePosition)
 		playerPosition.y += playerSpeedPps * elapsedTime;
 	}
 
+	if (keyRightPressed)
+	{
+		playerPosition.x += playerSpeedPps * elapsedTime;
+	}
+
 	if (keyLeftPressed)
 	{
 		playerPosition.x -= playerSpeedPps * elapsedTime;
 	}
 
-	if (keyRightPressed)
-	{
-		playerPosition.x += playerSpeedPps * elapsedTime;
-	}
-	// Player Bounding
-	if (playerPosition.y > arenaSize.width - arenaTileSize)
-	{
-		playerPosition.y = arenaSize.width - arenaTileSize;
-	}
+	playerSprite.setPosition(playerPosition);
 
-	if (playerPosition.y < arenaSize.width + arenaTileSize)
-	{
-		playerPosition.y = arenaSize.width + arenaTileSize;
-	}
 
+
+	// Player bounding
 	if (playerPosition.x > arenaSize.width - arenaTileSize)
 	{
 		playerPosition.x = arenaSize.width - arenaTileSize;
 	}
 
-	if (playerPosition.x < arenaSize.width + arenaTileSize)
+	if (playerPosition.x < arenaSize.left + arenaTileSize)
 	{
-		playerPosition.x = arenaSize.width + arenaTileSize;
+		playerPosition.x = arenaSize.left + arenaTileSize;
 	}
-	// Player Angle
-	float angle = (atan2(mousePosition.y - screenResolution.y / 2, mousePosition.x - screenResolution.x / 2) * 180) / 3.141;
+
+	if (playerPosition.y > arenaSize.height - arenaTileSize)
+	{
+		playerPosition.y = arenaSize.height - arenaTileSize;
+	}
+
+	if (playerPosition.y < arenaSize.top + arenaTileSize)
+	{
+		playerPosition.y = arenaSize.top + arenaTileSize;
+	}
+
+	// Calculate the angle the player is facing
+	float angle = (atan2(mousePosition.y - screenResolution.y / 2,
+		mousePosition.x - screenResolution.x / 2)
+		* 180) / 3.141;
+
 	playerSprite.setRotation(angle);
 }
 
+/**
 void Player::upgradeSpeed()
 {
-	playerSpeedPps += (PLAYERSTARTSPEED * 2);
+	// 20% speed upgrade
+	m_Speed += (START_SPEED * .2);
 }
 
 void Player::upgradeHealth()
 {
-	playerMaxHealth += (PLAYERSTARTHEALTH * .2);
+	// 20% max health upgrade
+	m_MaxHealth += (START_HEALTH * .2);
+
 }
 
 void Player::increaseHealthLevel(int amount)
 {
 	playerCurrentHealth += amount;
 
+	// But not beyond the maximum
 	if (playerCurrentHealth > playerMaxHealth)
 	{
-		playerCurrentHealth = playerMaxHealth;
+		m_Health = m_MaxHealth;
 	}
 }
+
+**/

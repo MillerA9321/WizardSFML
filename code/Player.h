@@ -1,49 +1,16 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <cmath>
+
 using namespace sf;
 
 class Player
 {
-public:
-	Player();
-	void playerSpawn(IntRect arena, Vector2f resolution, int tileSize);
-	void resetPlayerStats();
-	Vector2f getPlayerCoordinates();
-
-	bool hit(Time timeHit);
-
-	Time getLastHitTime();
-
-	FloatRect getPlayerPosition();
-
-	Vector2f getPlayerCenter();
-
-	float getPlayerRotation();
-
-	Sprite getPlayerSprite();
-
-	void moveUp();
-	void moveDown();
-	void moveLeft();
-	void moveRight();
-
-	void stopUp();
-	void stopDown();
-	void stopLeft();
-	void stopRight();
-
-	void updatePlayer(float elapsedTime, Vector2i mousePosition);
-	void upgradeSpeed();
-	void upgradeHealth();
-	void increaseHealthLevel(int amount);
-
-	int getHealth();
-
 private:
-	const float PLAYERSTARTSPEED = 200;
-	const float PLAYERSTARTHEALTH = 100;
+	const float START_SPEED = 100;
+	const float START_HEALTH = 1000;
 
+	// Player Position
 	Vector2f playerPosition;
 
 	Sprite playerSprite;
@@ -56,16 +23,49 @@ private:
 
 	int arenaTileSize;
 
+	// Getting the direction of player movement
 	bool keyUpPressed;
 	bool keyDownPressed;
 	bool keyLeftPressed;
 	bool keyRightPressed;
 
+	// Current Health
 	int playerCurrentHealth;
+	// Player max Health
 	int playerMaxHealth;
 
+	// Player last hit
 	Time playerLastHit;
 
-	// playerSpeed in Pixels Per Second (pps)
+	// Speed in pixels per second
 	float playerSpeedPps;
+
+public:
+
+	Player();
+	void spawnPlayer(IntRect arena, Vector2f resolution, int tileSize);
+	bool hit(Time timehit);
+	Time getLastHitTime();
+	FloatRect getPlayerPosition();
+	Vector2f getPlayerCenter();
+	float getRotation();
+	Sprite getPlayerSprite();
+
+	int currentHealth();
+
+	void moveLeft();
+	void moveRight();
+	void moveDown();
+	void moveUp();
+
+	void stopLeft();
+	void stopRight();
+	void stopDown();
+	void stopUp();
+
+	void updatePlayer(float elapsedTime, Vector2i mousePosition);
+
 };
+
+
+

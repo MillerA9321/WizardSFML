@@ -1,4 +1,4 @@
-#include "Entity.h"
+/**#include "Entity.h"
 #include "Player.h"
 #include <SFML/Graphics.hpp>
 
@@ -70,3 +70,4 @@ void Entity::updatePosition(float elapsedTime)
 
 
 
+**/

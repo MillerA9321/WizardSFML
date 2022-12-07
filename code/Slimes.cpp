@@ -1,4 +1,4 @@
-#include "Entity.h"
+/**#include "Entity.h"
 
 //Initizialize KingSlime
 KingSlime::KingSlime()
@@ -89,3 +89,4 @@ bool RedSlime::spawnRate(float timeElapsed)
     }
 }
 
+**/
